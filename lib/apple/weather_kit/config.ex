@@ -3,6 +3,10 @@ defmodule Apple.WeatherKit.ConfigError do
 end
 
 defmodule Apple.WeatherKit.Config do
+  @moduledoc """
+  Builds ~%Config{}~ struct with necessary options.
+  """
+
   @schema [
     team_id: [
       type: :string,

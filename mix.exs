@@ -23,7 +23,8 @@ defmodule Apple.WeatherKit.MixProject do
     [
       {:nimble_options, "~> 1.0"},
       {:jose, "~> 1.11"},
-      {:jason, "~> 1.0"}
+      {:jason, "~> 1.0"},
+      {:req, "~> 0.4.0"}
     ]
   end
 end

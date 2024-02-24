@@ -1,6 +1,6 @@
 # Apple.WeatherKit
 
-**TODO: Add description**
+An client for Apple's WeatherKit REST API.
 
 ## Installation
 
@@ -18,4 +18,3 @@ end
 Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
 and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
 be found at <https://hexdocs.pm/apple_weather_kit>.
-
