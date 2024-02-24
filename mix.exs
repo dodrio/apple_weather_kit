@@ -21,7 +21,9 @@ defmodule Apple.WeatherKit.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:nimble_options, "~> 1.0"}
+      {:nimble_options, "~> 1.0"},
+      {:jose, "~> 1.11"},
+      {:jason, "~> 1.0"}
     ]
   end
 end
