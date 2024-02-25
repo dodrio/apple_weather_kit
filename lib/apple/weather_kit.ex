@@ -76,12 +76,16 @@ defmodule Apple.WeatherKit do
   """
   @type latitude :: number()
 
+  defguard is_latitude(value) when is_number(value) and value >= -90 and value <= 90
+
   @typedoc """
   The longitude of the requested location.
 
   The value should be between `-180` and `180`.
   """
   @type longitude :: number()
+
+  defguard is_longitude(value) when is_number(value) and value >= -180 and value <= 180
 
   @typedoc """
   The ISO Alpha-2 country code for the requested location, like `"US"`.
@@ -160,7 +164,7 @@ defmodule Apple.WeatherKit do
   """
   @spec current_weather(Config.t(), latitude(), longitude(), keyword()) :: result()
   def current_weather(%Config{} = config, latitude, longitude, opts \\ [])
-      when latitude >= -90 and latitude <= 90 and longitude >= -180 and longitude <= 180 do
+      when is_latitude(latitude) and is_longitude(longitude) do
     path = build_weather_path(latitude, longitude, opts)
     params = build_weather_params([dataSets: "currentWeather"], opts)
     Request.get(config, path, params)
@@ -179,7 +183,7 @@ defmodule Apple.WeatherKit do
   """
   @spec forecast_daily(Config.t(), latitude(), longitude(), keyword()) :: result()
   def forecast_daily(%Config{} = config, latitude, longitude, opts \\ [])
-      when latitude >= -90 and latitude <= 90 and longitude >= -180 and longitude <= 180 do
+      when is_latitude(latitude) and is_longitude(longitude) do
     path = build_weather_path(latitude, longitude, opts)
     params = build_weather_params([dataSets: "forecastDaily"], opts)
     Request.get(config, path, params)
@@ -197,7 +201,7 @@ defmodule Apple.WeatherKit do
   """
   @spec forecast_hourly(Config.t(), latitude(), longitude(), keyword()) :: result()
   def forecast_hourly(%Config{} = config, latitude, longitude, opts \\ [])
-      when latitude >= -90 and latitude <= 90 and longitude >= -180 and longitude <= 180 do
+      when is_latitude(latitude) and is_longitude(longitude) do
     path = build_weather_path(latitude, longitude, opts)
     params = build_weather_params([dataSets: "forecastHourly"], opts)
     Request.get(config, path, params)
@@ -214,7 +218,7 @@ defmodule Apple.WeatherKit do
   """
   @spec forecast_next_hour(Config.t(), latitude(), longitude(), keyword()) :: result()
   def forecast_next_hour(%Config{} = config, latitude, longitude, opts \\ [])
-      when latitude >= -90 and latitude <= 90 and longitude >= -180 and longitude <= 180 do
+      when is_latitude(latitude) and is_longitude(longitude) do
     path = build_weather_path(latitude, longitude, opts)
     params = build_weather_params([dataSets: "forecastNextHour"], opts)
     Request.get(config, path, params)
@@ -237,7 +241,7 @@ defmodule Apple.WeatherKit do
         country_code,
         opts \\ []
       )
-      when latitude >= -90 and latitude <= 90 and longitude >= -180 and longitude <= 180 do
+      when is_latitude(latitude) and is_longitude(longitude) do
     path = build_weather_path(latitude, longitude, opts)
     params = build_weather_params([dataSets: "weatherAlerts", countryCode: country_code], opts)
     Request.get(config, path, params)
@@ -264,8 +268,7 @@ defmodule Apple.WeatherKit do
   """
   @spec weather_batch(Config.t(), latitude(), longitude(), data_sets(), keyword()) :: result()
   def weather_batch(%Config{} = config, latitude, longitude, data_sets, opts \\ [])
-      when latitude >= -90 and latitude <= 90 and longitude >= -180 and longitude <= 180 and
-             is_list(data_sets) do
+      when is_latitude(latitude) and is_longitude(longitude) and is_list(data_sets) do
     path = build_weather_path(latitude, longitude, opts)
     params = build_weather_params([dataSets: Enum.join(data_sets, ",")], opts)
     Request.get(config, path, params)
