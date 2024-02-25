@@ -24,3 +24,6 @@ apple_weather_kit-*.tar
 
 # Temporary files, for example, from tests.
 /tmp/
+
+# Ignore local .iex.exs
+/.iex.exs
