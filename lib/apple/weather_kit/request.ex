@@ -5,6 +5,11 @@ end
 defmodule Apple.WeatherKit.Request do
   @moduledoc """
   Provides basic HTTP request utilities.
+
+  References:
+
+    * [Request authentication for WeatherKit REST API](https://developer.apple.com/documentation/weatherkitrestapi/request_authentication_for_weatherkit_rest_api)
+
   """
 
   alias JOSE.{JWK, JWS, JWT}
@@ -14,12 +19,11 @@ defmodule Apple.WeatherKit.Request do
   @version Apple.WeatherKit.MixProject.project()[:version]
 
   def get(config, path, params \\ []) do
-    base_url = "https://weatherkit.apple.com/api"
+    base_url = "https://weatherkit.apple.com"
     headers = build_headers(config)
 
     Req.new(base_url: base_url, headers: headers)
     |> Req.get(url: path, params: params)
-    |> IO.inspect()
     |> case do
       {:ok, %Req.Response{status: status, body: body}} ->
         handle_response(status, body)
