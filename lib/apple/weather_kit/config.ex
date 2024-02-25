@@ -62,20 +62,27 @@ defmodule Apple.WeatherKit.Config do
   @enforce_keys Keyword.keys(@schema)
   defstruct @enforce_keys
 
+  @type t :: %__MODULE__{
+          team_id: String.t(),
+          service_id: String.t(),
+          key_id: String.t(),
+          private_key: String.t()
+        }
+
   def new(options) when is_list(options) do
     case NimbleOptions.validate(options, @schema) do
       {:ok, validated_options} ->
         {:ok, struct!(__MODULE__, validated_options)}
 
       {:error, %NimbleOptions.ValidationError{message: message}} ->
-        {:ok, %Apple.WeatherKit.ConfigError{message: message}}
+        {:error, %Apple.WeatherKit.ConfigError{message: message}}
     end
   end
 
   def new!(options) when is_list(options) do
     case new(options) do
       {:ok, config} -> config
-      {:error, error} -> raise error
+      {:error, exception} -> raise exception
     end
   end
 end

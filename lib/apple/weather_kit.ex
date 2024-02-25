@@ -4,12 +4,17 @@ defmodule Apple.WeatherKit do
 
   ## Quick Start
 
+  Before using `#{inspect(__MODULE__)}`, you need a basic understanding of the
+  WeatherKit REST API. Checkout [WeatherKit REST API](https://developer.apple.com/documentation/weatherkitrestapi).
+
+  Then, you can start using this package:
+
       # 1. build the config
       config =
         Apple.WeatherKit.Config.new!(
           team_id: "XXXXXXXXXX",
           service_id: "com.example.weatherkit-client",
-          key_id: System.fetch_env!("KEY_ID"),
+          key_id: "YYYYYYYYYY",
           private_key: "-----BEGIN PRIVATE KEY-----\\n...\\n-----END PRIVATE KEY-----"
         )
 
@@ -60,7 +65,7 @@ defmodule Apple.WeatherKit do
   alias __MODULE__.Config
 
   @typedoc """
-  The name of language, like "en", "zh-CN", "zh-HK".
+  The name of language, like `"en"`, `"zh-CN"`, `"zh-HK"`.
   """
   @type language :: String.t()
 
@@ -102,6 +107,8 @@ defmodule Apple.WeatherKit do
   """
   @type data_sets :: [data_set(), ...]
 
+  @type result :: {:ok, map()} | {:error, Exception.t()}
+
   @doc """
   Obtains the list of data sets available for the requested location.
 
@@ -109,12 +116,14 @@ defmodule Apple.WeatherKit do
   and weather alerts will be taken into consideration, or they are will
   be always ignored from the list.
   """
+  @spec available_data_sets(Config.t(), latitude(), longitude()) :: result()
   def available_data_sets(%Config{} = config, latitude, longitude) do
     path = build_availability_path(latitude, longitude)
     params = []
     Request.get(config, path, params)
   end
 
+  @spec available_data_sets(Config.t(), latitude(), longitude(), country_code()) :: result()
   def available_data_sets(%Config{} = config, latitude, longitude, country_code) do
     path = build_availability_path(latitude, longitude)
     params = [country: country_code]
@@ -128,17 +137,17 @@ defmodule Apple.WeatherKit do
   @doc_language "`language` - the name of language. Default to `\"en\"`."
   @doc_timezone "`timezone` - the name of timezone which is use for rolling up weather forecasts into daily forecasts." <>
                   "Default to `\"GMT/UTC\"`."
-  @doc_currentAsOf "`currentAsOf` - the UTC datetime string to obtain current conditions. " <>
-                     "Default to UTC datatime string of now, like `\"2024-02-15T19:23:45Z\"`."
-  @doc_dailyStart "`dailyStart` - The UTC datetime string whose day will be used to start the daily forecast. " <>
-                    "Default to UTC datetime string of now, like `\"2024-02-15T19:23:45Z\"`."
-  @doc_dailyEnd "`dailyEnd` - The UTC datetime string whose day will be used to end the daily forecast. " <>
-                  "Default to UTC datetime string of now plus 10 days, like `\"2024-02-25T19:23:45Z\"`."
-  @doc_hourlyStart "`hourlyStart` - The UTC datetime string whose hour will be used to start the hourly forcast." <>
+  @doc_current_as_of "`currentAsOf` - the UTC datetime string to obtain current conditions. " <>
+                       "Default to UTC datatime string of now, like `\"2024-02-15T19:23:45Z\"`."
+  @doc_daily_start "`dailyStart` - The UTC datetime string whose day will be used to start the daily forecast. " <>
                      "Default to UTC datetime string of now, like `\"2024-02-15T19:23:45Z\"`."
-  @doc_hourlyEnd "`hourlyEnd` - The UTC datetime string whose hour will be used to end the hourly forcast." <>
-                   "Default to UTC datetime string of 24 hours or the length of the daily forecast, whichever is longer, like `\"2024-02-16T19:23:45Z\"`."
-  @doc_countryCode "`countryCode` - The ISO Alpha-2 country code for the requested location, like `\"US\"`."
+  @doc_daily_end "`dailyEnd` - The UTC datetime string whose day will be used to end the daily forecast. " <>
+                   "Default to UTC datetime string of now plus 10 days, like `\"2024-02-25T19:23:45Z\"`."
+  @doc_hourly_start "`hourlyStart` - The UTC datetime string whose hour will be used to start the hourly forcast." <>
+                      "Default to UTC datetime string of now, like `\"2024-02-15T19:23:45Z\"`."
+  @doc_hourly_end "`hourlyEnd` - The UTC datetime string whose hour will be used to end the hourly forcast." <>
+                    "Default to UTC datetime string of 24 hours or the length of the daily forecast, whichever is longer, like `\"2024-02-16T19:23:45Z\"`."
+  @doc_country_code "`countryCode` - The ISO Alpha-2 country code for the requested location, like `\"US\"`."
 
   @doc """
   Obtains the current weather for the requested location.
@@ -146,9 +155,10 @@ defmodule Apple.WeatherKit do
   ## Options
 
     * #{@doc_language}
-    * #{@doc_currentAsOf}
+    * #{@doc_current_as_of}
 
   """
+  @spec current_weather(Config.t(), latitude(), longitude(), keyword()) :: result()
   def current_weather(%Config{} = config, latitude, longitude, opts \\ []) do
     path = build_weather_path(latitude, longitude, opts)
     params = build_weather_params([dataSets: "currentWeather"], opts)
@@ -162,10 +172,11 @@ defmodule Apple.WeatherKit do
 
     * #{@doc_language}
     * #{@doc_timezone}
-    * #{@doc_dailyStart}
-    * #{@doc_dailyEnd}
+    * #{@doc_daily_start}
+    * #{@doc_daily_end}
 
   """
+  @spec forecast_daily(Config.t(), latitude(), longitude(), keyword()) :: result()
   def forecast_daily(%Config{} = config, latitude, longitude, opts \\ []) do
     path = build_weather_path(latitude, longitude, opts)
     params = build_weather_params([dataSets: "forecastDaily"], opts)
@@ -178,10 +189,11 @@ defmodule Apple.WeatherKit do
   ## Options
 
     * #{@doc_language}
-    * #{@doc_hourlyStart}
-    * #{@doc_hourlyEnd}
+    * #{@doc_hourly_start}
+    * #{@doc_hourly_end}
 
   """
+  @spec forecast_hourly(Config.t(), latitude(), longitude(), keyword()) :: result()
   def forecast_hourly(%Config{} = config, latitude, longitude, opts \\ []) do
     path = build_weather_path(latitude, longitude, opts)
     params = build_weather_params([dataSets: "forecastHourly"], opts)
@@ -194,9 +206,10 @@ defmodule Apple.WeatherKit do
   ## Options
 
     * #{@doc_language}
-    * #{@doc_currentAsOf}
+    * #{@doc_current_as_of}
 
   """
+  @spec forecast_next_hour(Config.t(), latitude(), longitude(), keyword()) :: result()
   def forecast_next_hour(%Config{} = config, latitude, longitude, opts \\ []) do
     path = build_weather_path(latitude, longitude, opts)
     params = build_weather_params([dataSets: "forecastNextHour"], opts)
@@ -212,6 +225,7 @@ defmodule Apple.WeatherKit do
     * #{@doc_timezone}
 
   """
+  @spec weather_alerts(Config.t(), latitude(), longitude(), country_code(), keyword()) :: result()
   def weather_alerts(
         %Config{} = config,
         latitude,
@@ -231,18 +245,19 @@ defmodule Apple.WeatherKit do
 
     * #{@doc_language}
     * #{@doc_timezone}
-    * #{@doc_currentAsOf}
-    * #{@doc_dailyStart}
-    * #{@doc_dailyEnd}
-    * #{@doc_hourlyStart}
-    * #{@doc_hourlyEnd}
-    * #{@doc_countryCode}
+    * #{@doc_current_as_of}
+    * #{@doc_daily_start}
+    * #{@doc_daily_end}
+    * #{@doc_hourly_start}
+    * #{@doc_hourly_end}
+    * #{@doc_country_code}
 
   ## Examples
 
       Apple.WeatherKit.weather_batch(config, 27.637, 120.699, ["currentWeather", "forecastDaily", "forecastHourly"])
 
   """
+  @spec weather_batch(Config.t(), latitude(), longitude(), data_sets(), keyword()) :: result()
   def weather_batch(%Config{} = config, latitude, longitude, data_sets, opts \\ [])
       when is_list(data_sets) do
     path = build_weather_path(latitude, longitude, opts)
@@ -265,6 +280,7 @@ defmodule Apple.WeatherKit do
   @doc """
   Obtains attribution information.
   """
+  @spec attribution(Config.t(), language()) :: result()
   def attribution(%Config{} = config, language) do
     path = "/attribution/#{language}"
     Request.get(config, path)

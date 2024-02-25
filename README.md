@@ -2,19 +2,26 @@
 
 An client for Apple's WeatherKit REST API.
 
+## Notes
+
+This package is still in its early stages, so it may still undergo significant changes, potentially leading to breaking changes.
+
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `apple_weather_kit` to your list of dependencies in `mix.exs`:
+Add `:apple_weather_kit` to the list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
   [
-    {:apple_weather_kit, "~> 0.1.0"}
+    {:apple_weather_kit, <requirement>}
   ]
 end
 ```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at <https://hexdocs.pm/apple_weather_kit>.
+## Usage
+
+For more information, see the [documentation](https://hexdocs.pm/apple_weather_kit).
+
+## License
+
+Apache License 2.0
