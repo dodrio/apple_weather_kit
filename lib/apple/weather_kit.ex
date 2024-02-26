@@ -50,11 +50,7 @@ defmodule Apple.WeatherKit do
   WeatherKit REST API doesn't provide a list of all possible `conditionCode`,
   but WeatherKit Swift API does.
 
-  We can extract all possible values from
-  [WeatherKit / WeatherCondition](https://developer.apple.com/documentation/weatherkit/weathercondition),
-  then convert them to the format that we want.
-
-  > I have extracted them, and put them into `misc/` dir of source code.
+  Please check out `Apple.WeatherKit.Condition` for more information.
 
   ## References
 
