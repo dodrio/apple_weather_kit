@@ -1,0 +1,34 @@
+BlowingDust           , Blowing Dust
+Clear                 , Clear
+Cloudy                , Cloudy
+Foggy                 , Foggy
+Haze                  , Haze
+MostlyClear           , Mostly Clear
+MostlyCloudy          , Mostly Cloudy
+PartlyCloudy          , Partly Cloudy
+Smoky                 , Smoky
+Breezy                , Breezy
+Windy                 , Windy
+Drizzle               , Drizzle
+HeavyRain             , Heavy Rain
+IsolatedThunderstorms , Isolated Thunderstorms
+Rain                  , Rain
+SunShowers            , Sun Showers
+ScatteredThunderstorms, Scattered Thunderstorms
+StrongStorms          , Strong Storms
+Thunderstorms         , Thunderstorms
+Frigid                , Frigid
+Hail                  , Hail
+Hot                   , Hot
+Flurries              , Flurries
+Sleet                 , Sleet
+Snow                  , Snow
+SunFlurries           , Sun Flurries
+WintryMix             , Wintry Mix
+Blizzard              , Blizzard
+BlowingSnow           , Blowing Snow
+FreezingDrizzle       , Freezing Drizzle
+FreezingRain          , Freezing Rain
+HeavySnow             , Heavy Snow
+Hurricane             , Hurricane
+TropicalStorm         , Tropical Storm
