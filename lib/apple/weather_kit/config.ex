@@ -4,7 +4,7 @@ end
 
 defmodule Apple.WeatherKit.Config do
   @moduledoc """
-  Builds ~%Config{}~ struct with required options.
+  Builds `%Config{}` struct with required options.
 
   ## `team_id`
 
@@ -34,8 +34,7 @@ defmodule Apple.WeatherKit.Config do
 
   ## But, how to get these values?
 
-  Read ["Create a private key and Service ID" section of Request authentication for WeatherKit REST API]
-  (<https://developer.apple.com/documentation/weatherkitrestapi/request_authentication_for_weatherkit_rest_api#4042234>)
+  Read ["Create a private key and Service ID" section of Request authentication for WeatherKit REST API](https://developer.apple.com/documentation/weatherkitrestapi/request_authentication_for_weatherkit_rest_api#4042234)
   for more details.
 
   """
