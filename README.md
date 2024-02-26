@@ -24,7 +24,7 @@ end
 
 ## Usage
 
-For more information, see the [documentation](https://hexdocs.pm/apple_weather_kit).
+For more information, see the [documentation](https://hexdocs.pm/apple_weather_kit/Apple.WeatherKit.html).
 
 ## License
 
