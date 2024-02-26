@@ -69,6 +69,14 @@ defmodule Apple.WeatherKit.Request do
      }}
   end
 
+  defp handle_response(404, _body) do
+    {:error,
+     %RequestError{
+       reason: :not_found,
+       message: "The requested data is not found."
+     }}
+  end
+
   defp build_token(%Config{} = config) do
     issued_at = unix_time_in_seconds()
     expired_at = issued_at + 60
