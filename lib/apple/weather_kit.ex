@@ -138,7 +138,7 @@ defmodule Apple.WeatherKit do
 
   @doc_language "`language` - the name of language. Default to `\"en\"`."
   @doc_timezone "`timezone` - the name of timezone which is use for rolling up weather forecasts into daily forecasts." <>
-                  "Default to `\"GMT/UTC\"`."
+                  "Default to `\"Etc/UTC\"`."
   @doc_current_as_of "`currentAsOf` - the UTC datetime string to obtain current conditions. " <>
                        "Default to UTC datatime string of now, like `\"2024-02-15T19:23:45Z\"`."
   @doc_daily_start "`dailyStart` - The UTC datetime string whose day will be used to start the daily forecast. " <>
@@ -280,7 +280,7 @@ defmodule Apple.WeatherKit do
   defp build_weather_params(opts, extra) do
     opts
     |> Keyword.delete(:language)
-    |> Keyword.put_new(:timezone, "GMT/UTC")
+    |> Keyword.put_new(:timezone, "Etc/UTC")
     |> Keyword.merge(extra)
   end
 
