@@ -22,8 +22,13 @@ defmodule Apple.WeatherKit.Request do
     base_url = "https://weatherkit.apple.com"
     headers = build_headers(config)
 
-    Req.new(base_url: base_url, headers: headers)
-    |> Req.get(url: path, params: params)
+    Req.request(
+      method: :get,
+      base_url: base_url,
+      url: path,
+      params: params,
+      headers: headers
+    )
     |> case do
       {:ok, %Req.Response{status: status, body: body}} ->
         handle_response(status, body)
