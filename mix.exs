@@ -34,6 +34,7 @@ defmodule Apple.WeatherKit.MixProject do
       {:nimble_options, "~> 1.0"},
       {:jose, "~> 1.11"},
       {:jason, "~> 1.0"},
+      {:cozy_case, "~> 0.3"},
       {:req, "~> 0.4.0"},
       {:ex_check, "~> 0.15.0", only: [:dev], runtime: false},
       {:credo, ">= 0.0.0", only: [:dev], runtime: false},

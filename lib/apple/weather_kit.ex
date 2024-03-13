@@ -139,17 +139,17 @@ defmodule Apple.WeatherKit do
   @doc_language "`language` - the name of language. Default to `\"en\"`."
   @doc_timezone "`timezone` - the name of timezone which is use for rolling up weather forecasts into daily forecasts." <>
                   "Default to `\"Etc/UTC\"`."
-  @doc_current_as_of "`currentAsOf` - the UTC datetime string to obtain current conditions. " <>
+  @doc_current_as_of "`current_as_of` - the UTC datetime string to obtain current conditions. " <>
                        "Default to UTC datatime string of now, like `\"2024-02-15T19:23:45Z\"`."
-  @doc_daily_start "`dailyStart` - The UTC datetime string whose day will be used to start the daily forecast. " <>
+  @doc_daily_start "`daily_start` - The UTC datetime string whose day will be used to start the daily forecast. " <>
                      "Default to UTC datetime string of now, like `\"2024-02-15T19:23:45Z\"`."
-  @doc_daily_end "`dailyEnd` - The UTC datetime string whose day will be used to end the daily forecast. " <>
+  @doc_daily_end "`daily_end` - The UTC datetime string whose day will be used to end the daily forecast. " <>
                    "Default to UTC datetime string of now plus 10 days, like `\"2024-02-25T19:23:45Z\"`."
-  @doc_hourly_start "`hourlyStart` - The UTC datetime string whose hour will be used to start the hourly forcast." <>
+  @doc_hourly_start "`hourly_start` - The UTC datetime string whose hour will be used to start the hourly forcast." <>
                       "Default to UTC datetime string of now, like `\"2024-02-15T19:23:45Z\"`."
-  @doc_hourly_end "`hourlyEnd` - The UTC datetime string whose hour will be used to end the hourly forcast." <>
+  @doc_hourly_end "`hourly_end` - The UTC datetime string whose hour will be used to end the hourly forcast." <>
                     "Default to UTC datetime string of 24 hours or the length of the daily forecast, whichever is longer, like `\"2024-02-16T19:23:45Z\"`."
-  @doc_country_code "`countryCode` - The ISO Alpha-2 country code for the requested location, like `\"US\"`."
+  @doc_country_code "`country_code` - The ISO Alpha-2 country code for the requested location, like `\"US\"`."
 
   @doc """
   Obtains the current weather for the requested location.
@@ -282,6 +282,13 @@ defmodule Apple.WeatherKit do
     |> Keyword.delete(:language)
     |> Keyword.put_new(:timezone, "Etc/UTC")
     |> Keyword.merge(extra)
+    |> camelize()
+  end
+
+  defp camelize(opts) do
+    Enum.map(opts, fn {k, v} ->
+      {CozyCase.camel_case(k), v}
+    end)
   end
 
   @doc """
