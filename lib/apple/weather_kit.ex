@@ -286,10 +286,6 @@ defmodule Apple.WeatherKit do
     end)
   end
 
-  defp camel_case([_ | _] = list) do
-    Enum.map(list, fn x -> CozyCase.camel_case(x) end)
-  end
-
   @doc """
   Obtains attribution information.
   """
