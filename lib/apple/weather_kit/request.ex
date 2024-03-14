@@ -46,7 +46,7 @@ defmodule Apple.WeatherKit.Request do
   end
 
   defp handle_response(200, body) do
-    {:ok, body}
+    {:ok, CozyCase.snake_case(body)}
   end
 
   defp handle_response(400, _body) do

@@ -25,25 +25,18 @@ defmodule Apple.WeatherKit do
       #
       # {:ok,
       #  %{
-      #    "currentWeather" => %{
-      #      "asOf" => "2024-02-25T09:24:38Z",
-      #      "cloudCover" => 0.39,
-      #      "cloudCoverHighAltPct" => 0.0,
-      #      "cloudCoverLowAltPct" => 0.6,
+      #    "current_weather" => %{
+      #      "as_of" => "2024-02-25T09:24:38Z",
+      #      "cloud_cover" => 0.39,
+      #      "cloud_cover_high_alt_pct" => 0.0,
+      #      "cloud_cover_low_alt_pct" => 0.6,
       #      # ...
       #    }
       #  }
       # }
 
-  > You may notice that `#{inspect(__MODULE__)}` won't process body further after
-  > receiving the response.
-  >
-  > If you want to further process the body, for example, converting the map keys
-  > from camel case to snake case (which is used in Elixir conventionally), you have
-  > to do it by yourself.
-  >
-  > If you don't have any preference, you might consider using [`cozy_case`](https://hexdocs.pm/cozy_case/),
-  > which supports this use case, and provides related [examples](https://hexdocs.pm/cozy_case/CozyCase.html#module-examples).
+  > You may notice that `#{inspect(__MODULE__)}` convert the keys in response to snake-cased keys,
+  > which is used in Elixir community conventionally.
 
   ## All possible values of `conditionCode`?
 
@@ -164,7 +157,7 @@ defmodule Apple.WeatherKit do
   def current_weather(%Config{} = config, latitude, longitude, opts \\ [])
       when is_latitude(latitude) and is_longitude(longitude) do
     path = build_weather_path(latitude, longitude, opts)
-    params = build_weather_params([dataSets: "currentWeather"], opts)
+    params = build_weather_params([data_sets: "currentWeather"], opts)
     Request.get(config, path, params)
   end
 
@@ -183,7 +176,7 @@ defmodule Apple.WeatherKit do
   def forecast_daily(%Config{} = config, latitude, longitude, opts \\ [])
       when is_latitude(latitude) and is_longitude(longitude) do
     path = build_weather_path(latitude, longitude, opts)
-    params = build_weather_params([dataSets: "forecastDaily"], opts)
+    params = build_weather_params([data_sets: "forecastDaily"], opts)
     Request.get(config, path, params)
   end
 
@@ -201,7 +194,7 @@ defmodule Apple.WeatherKit do
   def forecast_hourly(%Config{} = config, latitude, longitude, opts \\ [])
       when is_latitude(latitude) and is_longitude(longitude) do
     path = build_weather_path(latitude, longitude, opts)
-    params = build_weather_params([dataSets: "forecastHourly"], opts)
+    params = build_weather_params([data_sets: "forecastHourly"], opts)
     Request.get(config, path, params)
   end
 
@@ -218,7 +211,7 @@ defmodule Apple.WeatherKit do
   def forecast_next_hour(%Config{} = config, latitude, longitude, opts \\ [])
       when is_latitude(latitude) and is_longitude(longitude) do
     path = build_weather_path(latitude, longitude, opts)
-    params = build_weather_params([dataSets: "forecastNextHour"], opts)
+    params = build_weather_params([data_sets: "forecastNextHour"], opts)
     Request.get(config, path, params)
   end
 
@@ -241,7 +234,7 @@ defmodule Apple.WeatherKit do
       )
       when is_latitude(latitude) and is_longitude(longitude) do
     path = build_weather_path(latitude, longitude, opts)
-    params = build_weather_params([dataSets: "weatherAlerts", countryCode: country_code], opts)
+    params = build_weather_params([data_sets: "weatherAlerts", countryCode: country_code], opts)
     Request.get(config, path, params)
   end
 
@@ -268,7 +261,7 @@ defmodule Apple.WeatherKit do
   def weather_batch(%Config{} = config, latitude, longitude, data_sets, opts \\ [])
       when is_latitude(latitude) and is_longitude(longitude) and is_list(data_sets) do
     path = build_weather_path(latitude, longitude, opts)
-    params = build_weather_params([dataSets: Enum.join(data_sets, ",")], opts)
+    params = build_weather_params([data_sets: Enum.join(data_sets, ",")], opts)
     Request.get(config, path, params)
   end
 
@@ -277,18 +270,24 @@ defmodule Apple.WeatherKit do
     "/api/v1/weather/#{language}/#{latitude}/#{longitude}"
   end
 
-  defp build_weather_params(opts, extra) do
+  defp build_weather_params(opts, extra_opts) do
     opts
     |> Keyword.delete(:language)
     |> Keyword.put_new(:timezone, "Etc/UTC")
-    |> Keyword.merge(extra)
-    |> camelize()
+    |> Keyword.merge(extra_opts)
+    |> camel_case()
   end
 
-  defp camelize(opts) do
-    Enum.map(opts, fn {k, v} ->
+  defp camel_case([]), do: []
+
+  defp camel_case([{_, _} | _] = kvs) do
+    Enum.map(kvs, fn {k, v} ->
       {CozyCase.camel_case(k), v}
     end)
+  end
+
+  defp camel_case([_ | _] = list) do
+    Enum.map(list, fn x -> CozyCase.camel_case(x) end)
   end
 
   @doc """
