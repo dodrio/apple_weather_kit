@@ -10,7 +10,7 @@ Smoky                 , 有烟雾
 Breezy                , 微风
 Windy                 , 大风
 Drizzle               , 细雨
-HeavyRain             , 小雨
+HeavyRain             , 暴雨
 IsolatedThunderstorms , 雷阵雨
 Rain                  , 雨
 SunShowers            , 晴间阵雨
