@@ -1,9 +1,9 @@
 BlowingDust           , 扬尘
-Clear                 , 晴朗无云
+Clear                 , 晴朗
 Cloudy                , 多云
 Foggy                 , 雾
 Haze                  , 霾
-MostlyClear           , 大部晴朗无云
+MostlyClear           , 大部晴朗
 MostlyCloudy          , 大部多云
 PartlyCloudy          , 局部多云
 Smoky                 , 有烟雾
