@@ -1,7 +1,7 @@
 defmodule Apple.WeatherKit.MixProject do
   use Mix.Project
 
-  @version "0.4.2"
+  @version "0.4.3"
   @description "An client for Apple's WeatherKit REST API."
   @source_url "https://github.com/elixir-apple/apple_weather_kit"
 
