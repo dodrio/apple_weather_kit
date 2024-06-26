@@ -1,6 +1,6 @@
 defmodule Apple.WeatherKit do
   @moduledoc """
-  An client for Apple's WeatherKit REST API.
+  A client for Apple's WeatherKit REST API.
 
   ## Quick Start
 

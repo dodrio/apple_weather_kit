@@ -3,7 +3,7 @@
 [![CI](https://github.com/elixir-apple/apple_weather_kit/actions/workflows/ci.yml/badge.svg)](https://github.com/elixir-apple/apple_weather_kit/actions/workflows/ci.yml)
 [![Hex.pm](https://img.shields.io/hexpm/v/apple_weather_kit.svg)](https://hex.pm/packages/apple_weather_kit)
 
-An client for Apple's WeatherKit REST API.
+A client for Apple's WeatherKit REST API.
 
 ## Notes
 
