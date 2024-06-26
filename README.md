@@ -2,7 +2,6 @@
 
 [![CI](https://github.com/elixir-apple/apple_weather_kit/actions/workflows/ci.yml/badge.svg)](https://github.com/elixir-apple/apple_weather_kit/actions/workflows/ci.yml)
 [![Hex.pm](https://img.shields.io/hexpm/v/apple_weather_kit.svg)](https://hex.pm/packages/apple_weather_kit)
-[![built with Nix](https://img.shields.io/badge/built%20with%20Nix-5277C3?logo=nixos&logoColor=white)](https://builtwithnix.org)
 
 An client for Apple's WeatherKit REST API.
 
