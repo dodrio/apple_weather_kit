@@ -1,0 +1,5 @@
+[
+  tools: [
+    {:compiler, false}
+  ]
+]

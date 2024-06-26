@@ -9,7 +9,7 @@ defmodule Apple.WeatherKit.MixProject do
     [
       app: :apple_weather_kit,
       version: @version,
-      elixir: "~> 1.14",
+      elixir: "~> 1.15",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       description: @description,
@@ -36,7 +36,7 @@ defmodule Apple.WeatherKit.MixProject do
       {:jason, "~> 1.0"},
       {:cozy_case, "~> 0.3"},
       {:req, "~> 0.4.0"},
-      {:ex_check, "~> 0.15.0", only: [:dev], runtime: false},
+      {:ex_check, ">= 0.0.0", only: [:dev], runtime: false},
       {:credo, ">= 0.0.0", only: [:dev], runtime: false},
       {:dialyxir, ">= 0.0.0", only: [:dev], runtime: false},
       {:ex_doc, ">= 0.0.0", only: [:dev], runtime: false},
