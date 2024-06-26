@@ -2,6 +2,10 @@ defmodule Apple.WeatherKit.RequestError do
   defexception [:message, :reason]
 end
 
+defmodule Apple.WeatherKit.ServerError do
+  defexception [:message, :reason]
+end
+
 defmodule Apple.WeatherKit.Request do
   @moduledoc """
   Provides basic HTTP request utilities.
@@ -15,6 +19,7 @@ defmodule Apple.WeatherKit.Request do
   alias JOSE.{JWK, JWS, JWT}
   alias Apple.WeatherKit.Config
   alias Apple.WeatherKit.RequestError
+  alias Apple.WeatherKit.ServerError
 
   @version Apple.WeatherKit.MixProject.project()[:version]
 
@@ -41,7 +46,7 @@ defmodule Apple.WeatherKit.Request do
   defp build_headers(%Config{} = config) do
     %{
       "Authorization" => "Bearer #{build_token(config)}",
-      "User-Agent" => "Apple.WeatherKit v#{@version}"
+      "User-Agent" => "Elixir Apple.WeatherKit v#{@version}"
     }
   end
 
@@ -79,6 +84,14 @@ defmodule Apple.WeatherKit.Request do
      %RequestError{
        reason: :not_found,
        message: "The requested data is not found."
+     }}
+  end
+
+  defp handle_response(status, _body) when status >= 500 do
+    {:error,
+     %ServerError{
+       reason: :unavailable,
+       message: "The server is unavailable due to #{inspect(status)}."
      }}
   end
 
