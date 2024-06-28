@@ -1,3 +1,7 @@
+> WARNING: This repo is not maintained due to [Ship utilities for building platform SDKs](https://github.com/cozy-elixir/proposals/blob/85da8babf8b0673db84631dbbd6346b8f734a7e6/ship-utilities-for-building-platform-sdks.md).
+>
+> You can use [apple](https://github.com/cozy-elixir/apple) as the helpers to build your own SDK.
+
 # Apple.WeatherKit
 
 [![CI](https://github.com/elixir-apple/apple_weather_kit/actions/workflows/ci.yml/badge.svg)](https://github.com/elixir-apple/apple_weather_kit/actions/workflows/ci.yml)
